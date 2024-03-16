@@ -13,16 +13,16 @@ async fn main() {
     let ping = warp::path("ping")
         .map(|| Response::builder().body("pong!"));
 
-    // Combine the routes with the CORS policy
-    // Define the CORS policy
+    // Enable CORS for any origin
     let cors = warp::cors()
         .allow_any_origin()
         .allow_headers(vec!["content-type"])
         .allow_methods(vec!["GET"]);
 
+        // Combine routes with defined CORS policy
     let routes = ping.with(cors);
 
-    // Start PINGU on port.
+    // Start PINGU on port
     warp::serve(routes)
         .run(([0, 0, 0, 0], port))
         .await;
